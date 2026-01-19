@@ -2,10 +2,10 @@ import csv
 
 headers = ['id','country','city','price','accomodation']
 def load_holidays():
-    with open('accomodations.csv',mode='r',encoding='utf-8') as file:
+    with open('.accomodations.csv',mode='r', encoding='utf-8') as file:
         return list(csv.DictReader(file))
 def save_holidays(holidays):
-    with open("accomodations.csv",mode="w", newline='',encoding="utf-8") as file:
+    with open("accomodations.csv",mode="w", newline='', encoding="utf-8") as file:
         writer = csv.DictWriter(file,fieldnames=headers)
         writer.writeheader()
         writer.writerows(holidays)
