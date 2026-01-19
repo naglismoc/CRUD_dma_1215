@@ -1,6 +1,7 @@
-from list_CRUD import *
+from file_CRUD import *
 
-holidays = load_default_data()
+
+holidays = load_holidays()
 id_counter = 3
 
 while True:

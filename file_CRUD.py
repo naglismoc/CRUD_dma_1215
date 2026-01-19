@@ -1,4 +1,15 @@
-from list_demo_data import load_holidays
+import csv
+
+headers = ['id','country','city','price','accomodation']
+def load_holidays():
+    with open('accomodations.csv',mode='r',encoding='utf-8') as file:
+        return list(csv.DictReader(file))
+def save_holidays(holidays):
+    with open("accomodations.csv",mode="w", newline='',encoding="utf-8") as file:
+        writer = csv.DictWriter(file,fieldnames=headers)
+        writer.writeheader()
+        writer.writerows(holidays)
+
 def print_info():
     print("--------------------------------------------------------------------------")
     print("1. Atvaizduoti atostogu pasirinkimus")
@@ -13,6 +24,7 @@ def print_holidays(holidays):
         print(f'{hol['id']}. Atostogos {hol['country']} {hol['city']}. Kaina gyvenant {hol['accomodation']} '
               f'parai {hol['price']} eurų.')
 
+
 def create_holiday(holidays,id_counter):
     print('atostogu itraukimas:')
     print("iveskite sali")
@@ -23,7 +35,7 @@ def create_holiday(holidays,id_counter):
     accom = input()
     print('iveskite kaina')
     price = float(input())
-    id_counter += 1
+    id_counter = int(holidays[-1]['id']) + 1 if len(holidays) > 0 else 1
     hol = {
         'id': id_counter,
         'country': country,
@@ -32,7 +44,9 @@ def create_holiday(holidays,id_counter):
         'price': price
     }
     holidays.append(hol)
+    save_holidays(holidays)
     return id_counter
+
 
 def edit_holiday(holidays):
     print('atostogu redagavimas')
@@ -50,6 +64,8 @@ def edit_holiday(holidays):
             hol['accomodation'] = input()
             print('iveskite kaina')
             hol['price'] = float(input())
+    save_holidays(holidays)
+
 def remove_holiday(holidays):
     print('atostogu salinimas')
     print("iveskite id atostogu kurias norite pasalinti")
@@ -59,3 +75,4 @@ def remove_holiday(holidays):
             print(f'{hol['id']}. Šalinama: Atostogos {hol['country']} {hol['city']}. Kaina gy'
                   f'venant {hol['accomodation']} parai {hol['price']} eurų.')
             holidays.remove(hol)
+    save_holidays(holidays)
